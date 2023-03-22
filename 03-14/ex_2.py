@@ -30,14 +30,6 @@ def GOE_sim(N,n_samples):
 
 
     eigen_diffs = eigen_diffs.flatten()
-    #n, bins, _ = plt.hist(
-    #   eigen_diffs, 50, density=True, facecolor="cyan", alpha=0.75
-    #)
-
-    #Wigner_GOE = Wigner_surmise_GOE(bins)
-    #plt.plot(bins,Wigner_GOE,"r-")
-            
-    #plt.show()
     return eigen_diffs
 
 
@@ -55,20 +47,13 @@ def GUE_sim(N,n_samples):
         #print(eigen_values
         result_list[i, :] = np.diff(eigen_values)/np.mean(np.diff(eigen_values))
 
+        # TODO need to change to use only middle indexes to of eigen diffs
+
 
     eigen_diffs = result_list/np.mean(result_list)
 
 
     eigen_diffs = eigen_diffs.flatten()
-    #n, bins, _ = plt.hist(
-    #    eigen_diffs, 200, density=True, facecolor="cyan", alpha=0.75
-    #)
-
-    
-    #Wigner_GUE = Wigner_surmise_GUE(bins)
-    #plt.plot(bins,Wigner_GOE,"r-")
-            
-    #plt.show()
     return eigen_diffs
 
 
