@@ -6,6 +6,8 @@ from tqdm import tqdm
 Nx = 520
 Ny = 180
 
+
+
 e = np.array(
     [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, 1], [-1, -1], [1, -1]]
 )
@@ -18,6 +20,12 @@ new_f = np.copy(f)
 u = np.zeros((Nx, Ny, 2))
 u_in = 0.04
 epsilon = 1
+
+
+Re = 220
+v_lb = u_in(180/2) / Re
+tau = 3*v_lb + 1/2
+
 
 weights = np.array([4/9,1/9,1/9,1/9,1/9,1/36,1/36,1/36,1/36])
 
@@ -73,7 +81,7 @@ for step in tqdm(range(20000)):
     f_eq[:,:,:] = tmp[:,:,:] * (1 + np.moveaxis(3*np.dot(u_0,e.T),-1,0)[:,:,:] + np.moveaxis(9/2*np.dot(u_0,e.T)**2,-1,0)[:,:,:] - 1.5*(u_0[:,:,0]**2 + u_0[:,:,1]**2)[:,:])
 
 
-    #collision step
+    #4. collision step
 
 
     #5. Replace parts of the distribution function after collision that
