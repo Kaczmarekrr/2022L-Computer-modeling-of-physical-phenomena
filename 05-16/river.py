@@ -10,7 +10,7 @@ I = 1
 Dh = 10
 b = 0.05
 r = 200
-raindrops = 1000
+raindrops = 10000
 
 
 def new_probab(H, wet_spots,cond_arr, Dh=10, x_n=300):
@@ -157,10 +157,12 @@ H , H2, cond_arr = erode(H,H2, wet_spots, cond_arr)
 for i in tqdm(range(len(wet_spots))):
     points_to_erode = []
     points_to_erode.append(wet_spots[i])
+    breakaer = 0
     wet_spot = wet_spots[i]
-    while wet_spot[1] > 0:
+    while wet_spot[1] > 0 and breakaer <200:
         wet_spot = new_probab_1(H, wet_spot,cond_arr, Dh=10, x_n=300)
         points_to_erode.append(wet_spot)
+        breakaer+=1
     
 
     for x,y in points_to_erode:
@@ -169,14 +171,16 @@ for i in tqdm(range(len(wet_spots))):
     H = avalange(H,r)
     #plt.imshow(np.sum(cond_arr[:,1:],axis=0).T, origin="lower",vmax=5)
     #plt.imshow(cond_arr[1].T, origin="lower")
-    plt.imshow(H.T, origin="lower")
-    #for spot in wet_spots:
-    #   if spot[1] != 0:
-    #       plt.plot(spot[0], spot[1], "r.")
-    plt.colorbar()
-    plt.savefig(f"results/{i}.png")
 
-    plt.close()
+    if i % 100==0:
+        plt.imshow(H.T, origin="lower")
+        #for spot in wet_spots:
+        #   if spot[1] != 0:
+        #       plt.plot(spot[0], spot[1], "r.")
+        plt.colorbar()
+        plt.savefig(f"results/{i}.png")
+
+        plt.close()
     #wet_spots = new_probab(H2[:, :], wet_spots,cond_arr)
     #H, H2, cond_arr = erode(H,H2, wet_spots, cond_arr)
     #H2 = avalange(H2,r)
