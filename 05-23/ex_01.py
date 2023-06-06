@@ -48,15 +48,15 @@ H1 = H1_1 + H1_2
 
 
 
-dl = 0.1
-lamb = np.arange(0,1,dl)
+dl = 0.01
+lamb = np.arange(0.01,1,dl)
 #lamb = 0.1
 
 results = []
 results2 = []
 tmp = 0
 for l in lamb:
-    H_l = l*H1 - ((1-l)*H0)
+    H_l = l*H1 + ((1-l)*H0)
     H_l = (H_l + (np.conjugate(H_l)).T) / 2
 
     eigen_values, eigen_vectors = np.linalg.eigh(H_l)
@@ -71,7 +71,7 @@ plt.xlabel("adiabatic parameter")
 plt.ylabel("Energy gap")
 plt.title("Energy gap along AQC")
 plt.ylim(0,2)
-plt.show()
+plt.savefig("results.png")
 
 print("time",tmp)
 
